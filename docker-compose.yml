@@ -1,0 +1,33 @@
+version: "3"
+services:
+  # frontend
+  frontend-server:
+    image: nginx
+    container_name: frontend-server
+    privileged: true
+    ports:
+      - 80:80
+    depends_on:
+      - backend-server
+    volumes:
+      - ./frontend/src:/usr/share/nginx/html
+      - ./frontend/nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - kia-demo-network
+    restart: always
+  # backend(Fast API)
+  backend-server:
+    build: ./backend
+    container_name: backend-server
+    volumes:
+      - ./backend/app:/app
+      - ./backend/data:/data
+    working_dir: /app
+    command: uvicorn main:app --reload --host 0.0.0.0
+    networks:
+      - kia-demo-network
+    restart: always
+
+# Network for KIA-DEMO containers
+networks:
+  kia-demo-network:
