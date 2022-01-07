@@ -19,6 +19,8 @@ services:
   backend-server:
     build: ./backend
     container_name: backend-server
+    env_file:
+      - ./backend/.env
     volumes:
       - ./backend/app:/app
       - ./backend/data:/data

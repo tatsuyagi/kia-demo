@@ -26,4 +26,5 @@ RUN pip install \
   numpy \
   scikit-learn \
   fastapi \
-  uvicorn[standard]
+  uvicorn[standard] \
+  requests
