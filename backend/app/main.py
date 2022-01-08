@@ -112,12 +112,13 @@ async def rakutenSearch(text: Optional[str] = None, limit: Optional[int] = 3, ca
                 return Response(content=contents, media_type="application/javascript")
 
             for idx, item in enumerate(data['Items']):
-                result_list.append({'type': 'text', 'value': '【結果{}】<a href="{}" target="_blank">{}</a>'.format(
+                result_list.append({'type': 'text', 'value': '【結果{}】<a href="{}" target="_blank">{}</a>（{}円）'.format(
                     idx + 1,
                     item['Item']['itemUrl'],
-                    item['Item']['itemName']
+                    item['Item']['itemName'],
+                    item['Item']['itemPrice']
                 )})
-                if (len(item['Item']['mediumImageUrls']) > 0):
+                if (item['Item']['imageFlag'] == 1):
                     result_list.append({'type': 'image', 'value': '{}'.format(item['Item']['mediumImageUrls'].pop()["imageUrl"])})
                 if (idx == limit - 1):
                     break
